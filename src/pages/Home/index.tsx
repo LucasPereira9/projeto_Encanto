@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import {signIn, signUp} from './src/services/Auth';
+import {signIn, signUp} from '../../services/Auth';
 
 export default function App() {
   const [lucas, setLucas] = useState('');

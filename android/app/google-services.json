@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "647668418405",
+    "project_id": "encanto-feminino",
+    "storage_bucket": "encanto-feminino.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647668418405:android:e27a8414d7846c2640438c",
+        "android_client_info": {
+          "package_name": "com.encantoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "647668418405-ghl4n23io6k2ukmssspcoubh127q8ftv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcJG64IUqtRfUim2MmdM5jViVyFUYkHrc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "647668418405-ghl4n23io6k2ukmssspcoubh127q8ftv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
