@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import {signIn, signUp} from './src/services/Auth';
+import {signIn, signUp} from '../../hooks/Auth';
+import {useNavigation} from '@react-navigation/native';
 
-export default function App() {
-  const [lucas, setLucas] = useState('');
+export default function Login() {
+  const navigation = useNavigation();
 
   return (
     <View>
@@ -11,26 +12,25 @@ export default function App() {
       <TouchableOpacity
         onPress={() =>
           signUp({
-            email: 'lucasa@gmail.com',
+            email: 'camila@gmail.com.br',
             password: '12345678',
-            name: 'lucas',
+            name: 'camila rufino',
           })
         }>
         <Text>cadastrar</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() =>
+        onPress={() => {
           signIn({
-            email: 'lucasa212l@gmail.com',
+            email: 'camila@gmail.com.br',
             password: '12345678',
-            setTeste: setLucas,
-          })
-        }>
+            NextStep: () => navigation.navigate('Home'),
+          });
+        }}>
         <Text>logar</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => console.log('creddd: ', lucas.user.displayName)}>
+      <TouchableOpacity>
         <Text>teste</Text>
       </TouchableOpacity>
     </View>

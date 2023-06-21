@@ -5,22 +5,21 @@ export async function signUp({email, password, name}: ISignUp) {
   try {
     await auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(credencials => {
+      .then(() => {
         auth().currentUser?.updateProfile({
           displayName: name,
         });
-        console.log(credencials);
       });
   } catch (error) {
     console.log('error: ', error);
   }
 }
 
-export async function signIn({email, password, setTeste}: ISignIn) {
+export async function signIn({email, password, NextStep}: ISignIn) {
   try {
     await auth()
       .signInWithEmailAndPassword(email, password)
-      .then(credencials => setTeste(credencials));
+      .then(() => NextStep());
   } catch (error) {
     console.log(error);
   }

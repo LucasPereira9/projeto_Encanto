@@ -6,5 +6,5 @@ export interface ISignUp {
 export interface ISignIn {
   email: string;
   password: string;
-  setTeste: any;
+  NextStep: () => void;
 }
