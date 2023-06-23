@@ -7,9 +7,21 @@ import {defaultStyles} from '../../global/defaultStyles';
 import Input from '../../components/input';
 import {styles} from './styles';
 import Button from '../../components/button';
+import {Controller, SubmitHandler, useForm} from 'react-hook-form';
+import {IRegisterData} from './registerData.structure';
 
 export default function Register() {
   const Show = useRef(new Animated.Value(0)).current;
+  const {
+    control,
+    handleSubmit,
+    formState: {isValid},
+    watch,
+  } = useForm({mode: 'onChange'});
+
+  const onSubmit: SubmitHandler<IRegisterData> = (data: IRegisterData) => {
+    console.log(data);
+  };
 
   useEffect(() => {
     Animated.timing(Show, {
@@ -27,18 +39,71 @@ export default function Register() {
             <Text style={styles.title}>CRIAR NOVA CONTA</Text>
           </View>
           <View>
-            <Input icon="user" placeholder="insira seu nome" />
-            <Input icon="mail" placeholder="insira o email" />
-            <Input icon="lock" placeholder="insira a senha" secureText={true} />
-            <Input
-              icon="lock"
-              placeholder="confirme a senha"
-              secureText={true}
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  icon="user"
+                  placeholder="insira seu nome"
+                  value={value}
+                  setValue={onChange}
+                />
+              )}
+              name="userName"
+              defaultValue=""
+            />
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  keyboardType={'email-address'}
+                  icon="mail"
+                  placeholder="insira o email"
+                  value={value}
+                  setValue={onChange}
+                />
+              )}
+              name="email"
+              defaultValue=""
+            />
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  keyboardType={'numeric'}
+                  icon="lock"
+                  placeholder="insira a senha"
+                  value={value}
+                  setValue={onChange}
+                  secureText={true}
+                />
+              )}
+              name="password"
+              defaultValue=""
+            />
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  keyboardType={'numeric'}
+                  icon="lock"
+                  placeholder="confirme a senha"
+                  value={value}
+                  setValue={onChange}
+                  secureText={true}
+                />
+              )}
+              name="confirmPassword"
+              defaultValue=""
             />
           </View>
         </View>
         <View style={styles.button}>
-          <Button title="CRIAR CONTA" pressed={() => console.log('clicou')} />
+          <Button title="CRIAR CONTA" pressed={handleSubmit(onSubmit)} />
         </View>
       </Animated.View>
 

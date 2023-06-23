@@ -4,4 +4,5 @@ export interface IInput {
   value: string;
   setValue: (value: string) => void;
   secureText?: boolean;
+  keyboardType?: any;
 }

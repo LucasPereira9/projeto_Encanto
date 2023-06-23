@@ -11,6 +11,7 @@ export default function Input({
   value,
   setValue,
   secureText,
+  keyboardType,
 }: IInput) {
   return (
     <View style={styles.Container}>
@@ -19,6 +20,7 @@ export default function Input({
       </View>
       <View style={styles.inputContainer}>
         <TextInput
+          keyboardType={keyboardType}
           secureTextEntry={secureText}
           value={value}
           onChangeText={text => setValue(text)}

@@ -40,7 +40,10 @@ export default function Login() {
     signIn({
       email: data.email,
       password: data.password,
-      NextStep: () => Alert.alert('TA LIBERADA MADAME'),
+      NextStep: () => {
+        console.log(data);
+        Alert.alert('TA LIBERADA MADAME');
+      },
     });
   };
 
@@ -112,6 +115,7 @@ export default function Login() {
             rules={{required: true}}
             render={({field: {onChange, value}}) => (
               <Input
+                keyboardType={'email-address'}
                 icon="mail"
                 placeholder="Digite seu email"
                 value={value}
@@ -126,6 +130,7 @@ export default function Login() {
             rules={{required: true}}
             render={({field: {onChange, value}}) => (
               <Input
+                keyboardType={'numeric'}
                 icon="lock"
                 placeholder="Digite sua senha"
                 value={value}
