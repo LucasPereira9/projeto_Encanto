@@ -8,6 +8,7 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   StatusBar,
+  Alert,
 } from 'react-native';
 import {signIn, signUp} from '../../hooks/Auth';
 import {useNavigation} from '@react-navigation/native';
@@ -18,17 +19,30 @@ import {Keyboard} from 'react-native';
 import theme from '../../global/theme';
 import Button from '../../components/button';
 import {defaultStyles} from '../../global/defaultStyles';
+import {Controller, SubmitHandler, useForm} from 'react-hook-form';
+import {ILoginData} from './loginData.structure';
 
 export default function Login() {
   const navigation = useNavigation();
+  const {
+    control,
+    handleSubmit,
+    formState: {isValid},
+    watch,
+  } = useForm({mode: 'onChange'});
 
   const moveAnim = useRef(new Animated.Value(0)).current;
   const topAnim = useRef(new Animated.Value(0)).current;
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const Show = useRef(new Animated.Value(0)).current;
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const onSubmit: SubmitHandler<ILoginData> = (data: ILoginData) => {
+    signIn({
+      email: data.email,
+      password: data.password,
+      NextStep: () => Alert.alert('TA LIBERADA MADAME'),
+    });
+  };
 
   useEffect(() => {
     Animated.sequence([
@@ -93,22 +107,39 @@ export default function Login() {
         </View>
 
         <Animated.View style={{opacity: Show}}>
-          <Input
-            icon="mail"
-            placeholder="Digite seu email"
-            value={email}
-            setValue={setEmail}
+          <Controller
+            control={control}
+            rules={{required: true}}
+            render={({field: {onChange, value}}) => (
+              <Input
+                icon="mail"
+                placeholder="Digite seu email"
+                value={value}
+                setValue={onChange}
+              />
+            )}
+            name="email"
+            defaultValue=""
           />
-          <Input
-            icon="lock"
-            placeholder="Digite sua senha"
-            value={password}
-            setValue={setPassword}
-            secureText={true}
+          <Controller
+            control={control}
+            rules={{required: true}}
+            render={({field: {onChange, value}}) => (
+              <Input
+                icon="lock"
+                placeholder="Digite sua senha"
+                value={value}
+                setValue={onChange}
+                secureText={true}
+              />
+            )}
+            name="password"
+            defaultValue=""
           />
+
           <View style={styles.content}>
             <Text style={styles.forgotPass}>Esqueceu sua senha?</Text>
-            <Button pressed={() => console.log('logou')} title="LOGAR" />
+            <Button pressed={handleSubmit(onSubmit)} title="LOGAR" />
             <View>
               <TouchableOpacity
                 onPress={() => navigation.navigate('Register')}

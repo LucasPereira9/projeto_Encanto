@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 2.2,
     borderColor: theme.colors.gray,
-    height: '25%',
+    height: '23%',
     width: '40%',
   },
   text: {
