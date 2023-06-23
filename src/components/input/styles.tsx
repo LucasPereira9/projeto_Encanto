@@ -14,6 +14,8 @@ export const styles = StyleSheet.create({
   },
   iconContainer: {
     borderRightWidth: 0.6,
+    minWidth: '11%',
+    alignItems: 'center',
     borderColor: theme.colors.primary,
     paddingHorizontal: 10,
   },
@@ -21,5 +23,8 @@ export const styles = StyleSheet.create({
     color: theme.colors.white,
     paddingLeft: 10,
     flex: 1,
+  },
+  eyeContent: {
+    marginRight: 13,
   },
 });

@@ -10,7 +10,7 @@ import {
   StatusBar,
   Alert,
 } from 'react-native';
-import {signIn, signUp} from '../../hooks/Auth';
+import {signIn} from '../../hooks/Auth';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import {styles} from './styles';
@@ -28,8 +28,9 @@ export default function Login() {
     control,
     handleSubmit,
     formState: {isValid},
-    watch,
   } = useForm({mode: 'onChange'});
+
+  const [showPassword, setShowPassword] = useState(true);
 
   const moveAnim = useRef(new Animated.Value(0)).current;
   const topAnim = useRef(new Animated.Value(0)).current;
@@ -116,7 +117,7 @@ export default function Login() {
             render={({field: {onChange, value}}) => (
               <Input
                 keyboardType={'email-address'}
-                icon="mail"
+                icon="envelope"
                 placeholder="Digite seu email"
                 value={value}
                 setValue={onChange}
@@ -135,7 +136,9 @@ export default function Login() {
                 placeholder="Digite sua senha"
                 value={value}
                 setValue={onChange}
-                secureText={true}
+                secureText={showPassword}
+                secondIcon={showPassword ? 'eye-slash' : 'eye'}
+                pressed={() => setShowPassword(!showPassword)}
               />
             )}
             name="password"

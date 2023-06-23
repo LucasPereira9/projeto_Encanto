@@ -1,7 +1,10 @@
 import * as React from 'react';
 import 'react-native-gesture-handler';
 import {CheckpointProvider} from './src/hooks/Checkpoint';
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import Home from './src/pages/Home';
 import Login from './src/pages/Login';
@@ -18,7 +21,12 @@ export default function Routes() {
       <NavigationContainer>
         <CheckpointProvider>
           <Stack.Navigator
-            screenOptions={{headerShown: false}}
+            screenOptions={{
+              headerShown: false,
+              gestureEnabled: true,
+              gestureDirection: 'horizontal',
+              cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            }}
             initialRouteName={'Login'}>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />

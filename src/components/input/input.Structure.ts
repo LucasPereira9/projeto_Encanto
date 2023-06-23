@@ -5,4 +5,6 @@ export interface IInput {
   setValue: (value: string) => void;
   secureText?: boolean;
   keyboardType?: any;
+  pressed?: () => void;
+  secondIcon?: string;
 }

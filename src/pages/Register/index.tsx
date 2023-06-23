@@ -1,5 +1,11 @@
-import React, {useEffect, useRef} from 'react';
-import {Animated, Text, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  Animated,
+  Keyboard,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import LinearGradient from 'react-native-linear-gradient';
 import theme from '../../global/theme';
@@ -16,8 +22,9 @@ export default function Register() {
     control,
     handleSubmit,
     formState: {isValid},
-    watch,
   } = useForm({mode: 'onChange'});
+  const [showPassword, setShowPassword] = useState(true);
+  const [ShowConfirmPassword, setShowConfirmPassword] = useState(true);
 
   const onSubmit: SubmitHandler<IRegisterData> = (data: IRegisterData) => {
     console.log(data);
@@ -32,87 +39,93 @@ export default function Register() {
     }).start();
   }, [Show]);
   return (
-    <View style={defaultStyles.Container}>
-      <Animated.View style={{opacity: Show}}>
-        <View style={styles.content}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.title}>CRIAR NOVA CONTA</Text>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={defaultStyles.Container}>
+        <Animated.View style={{opacity: Show}}>
+          <View style={styles.content}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.title}>CRIAR NOVA CONTA</Text>
+            </View>
+            <View>
+              <Controller
+                control={control}
+                rules={{required: true}}
+                render={({field: {onChange, value}}) => (
+                  <Input
+                    icon="user"
+                    placeholder="insira seu nome"
+                    value={value}
+                    setValue={onChange}
+                  />
+                )}
+                name="userName"
+                defaultValue=""
+              />
+              <Controller
+                control={control}
+                rules={{required: true}}
+                render={({field: {onChange, value}}) => (
+                  <Input
+                    keyboardType={'email-address'}
+                    icon="envelope"
+                    placeholder="insira o email"
+                    value={value}
+                    setValue={onChange}
+                  />
+                )}
+                name="email"
+                defaultValue=""
+              />
+              <Controller
+                control={control}
+                rules={{required: true}}
+                render={({field: {onChange, value}}) => (
+                  <Input
+                    keyboardType={'numeric'}
+                    icon="lock"
+                    placeholder="insira a senha"
+                    value={value}
+                    setValue={onChange}
+                    secureText={showPassword}
+                    secondIcon={showPassword ? 'eye-slash' : 'eye'}
+                    pressed={() => setShowPassword(!showPassword)}
+                  />
+                )}
+                name="password"
+                defaultValue=""
+              />
+              <Controller
+                control={control}
+                rules={{required: true}}
+                render={({field: {onChange, value}}) => (
+                  <Input
+                    keyboardType={'numeric'}
+                    icon="lock"
+                    placeholder="confirme a senha"
+                    value={value}
+                    setValue={onChange}
+                    secureText={ShowConfirmPassword}
+                    secondIcon={ShowConfirmPassword ? 'eye-slash' : 'eye'}
+                    pressed={() => setShowConfirmPassword(!ShowConfirmPassword)}
+                  />
+                )}
+                name="confirmPassword"
+                defaultValue=""
+              />
+            </View>
           </View>
-          <View>
-            <Controller
-              control={control}
-              rules={{required: true}}
-              render={({field: {onChange, value}}) => (
-                <Input
-                  icon="user"
-                  placeholder="insira seu nome"
-                  value={value}
-                  setValue={onChange}
-                />
-              )}
-              name="userName"
-              defaultValue=""
-            />
-            <Controller
-              control={control}
-              rules={{required: true}}
-              render={({field: {onChange, value}}) => (
-                <Input
-                  keyboardType={'email-address'}
-                  icon="mail"
-                  placeholder="insira o email"
-                  value={value}
-                  setValue={onChange}
-                />
-              )}
-              name="email"
-              defaultValue=""
-            />
-            <Controller
-              control={control}
-              rules={{required: true}}
-              render={({field: {onChange, value}}) => (
-                <Input
-                  keyboardType={'numeric'}
-                  icon="lock"
-                  placeholder="insira a senha"
-                  value={value}
-                  setValue={onChange}
-                  secureText={true}
-                />
-              )}
-              name="password"
-              defaultValue=""
-            />
-            <Controller
-              control={control}
-              rules={{required: true}}
-              render={({field: {onChange, value}}) => (
-                <Input
-                  keyboardType={'numeric'}
-                  icon="lock"
-                  placeholder="confirme a senha"
-                  value={value}
-                  setValue={onChange}
-                  secureText={true}
-                />
-              )}
-              name="confirmPassword"
-              defaultValue=""
-            />
+          <View style={styles.button}>
+            <Button title="CRIAR CONTA" pressed={handleSubmit(onSubmit)} />
           </View>
-        </View>
-        <View style={styles.button}>
-          <Button title="CRIAR CONTA" pressed={handleSubmit(onSubmit)} />
-        </View>
-      </Animated.View>
+        </Animated.View>
 
-      <LinearGradient
-        colors={['transparent', theme.colors.primary]}
-        start={{x: 0, y: 0}}
-        end={{x: 0, y: 1.8}}
-        style={defaultStyles.gradient}
-      />
-    </View>
+        <LinearGradient
+          colors={['transparent', theme.colors.primary]}
+          start={{x: 0, y: 0}}
+          end={{x: 0, y: 1.8}}
+          style={defaultStyles.gradient}
+        />
+      </View>
+    </TouchableWithoutFeedback>
   );
 }

@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, TextInput} from 'react-native';
+import {View, TextInput, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
-import Icon from 'react-native-vector-icons/AntDesign';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {IInput} from './input.Structure';
 import theme from '../../global/theme';
 
@@ -12,11 +13,13 @@ export default function Input({
   setValue,
   secureText,
   keyboardType,
+  pressed,
+  secondIcon,
 }: IInput) {
   return (
     <View style={styles.Container}>
       <View style={styles.iconContainer}>
-        <Icon name={icon} size={28} color="#F99779" />
+        <Icon name={icon} size={22} color="#F99779" />
       </View>
       <View style={styles.inputContainer}>
         <TextInput
@@ -29,6 +32,11 @@ export default function Input({
           style={styles.inputContainer}
         />
       </View>
+      {secondIcon && (
+        <TouchableOpacity onPress={pressed} style={styles.eyeContent}>
+          <Icon name={secondIcon} size={25} color="#F99779" />
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
