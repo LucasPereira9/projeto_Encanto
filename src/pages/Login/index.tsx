@@ -17,6 +17,7 @@ import Input from '../../components/input';
 import {Keyboard} from 'react-native';
 import theme from '../../global/theme';
 import Button from '../../components/button';
+import {defaultStyles} from '../../global/defaultStyles';
 
 export default function Login() {
   const navigation = useNavigation();
@@ -64,7 +65,7 @@ export default function Login() {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={styles.Container}>
+      <View style={defaultStyles.Container}>
         <StatusBar
           backgroundColor="transparent"
           barStyle="light-content"
@@ -109,7 +110,10 @@ export default function Login() {
             <Text style={styles.forgotPass}>Esqueceu sua senha?</Text>
             <Button pressed={() => console.log('logou')} title="LOGAR" />
             <View>
-              <TouchableOpacity style={styles.bottomButton} activeOpacity={0.7}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Register')}
+                style={styles.bottomButton}
+                activeOpacity={0.7}>
                 <Text style={styles.registerText}> É nova por aqui? </Text>
                 <Text style={styles.forgotPass}>Crie sua conta</Text>
               </TouchableOpacity>
@@ -121,7 +125,7 @@ export default function Login() {
           colors={['transparent', theme.colors.primary]}
           start={{x: 0, y: 0}}
           end={{x: 0, y: 1.8}}
-          style={styles.gradient}
+          style={defaultStyles.gradient}
         />
       </View>
     </TouchableWithoutFeedback>

@@ -2,10 +2,6 @@ import {StyleSheet} from 'react-native';
 import theme from '../../global/theme';
 
 export const styles = StyleSheet.create({
-  Container: {
-    flex: 1,
-    backgroundColor: theme.colors.black,
-  },
   logoContainer: {
     alignItems: 'center',
     flex: 1,
@@ -37,13 +33,5 @@ export const styles = StyleSheet.create({
   registerText: {
     color: theme.colors.white,
     fontSize: 17,
-  },
-  gradient: {
-    position: 'absolute',
-    bottom: '0%',
-    width: '100%',
-    height: '16%',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
