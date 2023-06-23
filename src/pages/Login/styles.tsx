@@ -1,9 +1,10 @@
 import {StyleSheet} from 'react-native';
+import theme from '../../global/theme';
 
 export const styles = StyleSheet.create({
   Container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: theme.colors.black,
   },
   logoContainer: {
     alignItems: 'center',
@@ -20,5 +21,29 @@ export const styles = StyleSheet.create({
   stringImage: {
     width: 170,
     height: 60,
+  },
+  content: {
+    paddingTop: 10,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  forgotPass: {
+    color: theme.colors.primary,
+    fontSize: 17,
+  },
+  bottomButton: {
+    flexDirection: 'row',
+  },
+  registerText: {
+    color: theme.colors.white,
+    fontSize: 17,
+  },
+  gradient: {
+    position: 'absolute',
+    bottom: '0%',
+    width: '100%',
+    height: '16%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

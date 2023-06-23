@@ -15,6 +15,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import {styles} from './styles';
 import Input from '../../components/input';
 import {Keyboard} from 'react-native';
+import theme from '../../global/theme';
+import Button from '../../components/button';
 
 export default function Login() {
   const navigation = useNavigation();
@@ -92,28 +94,34 @@ export default function Login() {
         <Animated.View style={{opacity: Show}}>
           <Input
             icon="mail"
-            placeholder="escreva seu email"
+            placeholder="Digite seu email"
             value={email}
             setValue={setEmail}
           />
           <Input
             icon="lock"
-            placeholder="escreva sua senha"
+            placeholder="Digite sua senha"
             value={password}
             setValue={setPassword}
             secureText={true}
           />
+          <View style={styles.content}>
+            <Text style={styles.forgotPass}>Esqueceu sua senha?</Text>
+            <Button pressed={() => console.log('logou')} title="LOGAR" />
+            <View>
+              <TouchableOpacity style={styles.bottomButton} activeOpacity={0.7}>
+                <Text style={styles.registerText}> É nova por aqui? </Text>
+                <Text style={styles.forgotPass}>Crie sua conta</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </Animated.View>
 
         <LinearGradient
-          colors={['transparent', '#F99779']}
+          colors={['transparent', theme.colors.primary]}
           start={{x: 0, y: 0}}
           end={{x: 0, y: 1.8}}
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
+          style={styles.gradient}
         />
       </View>
     </TouchableWithoutFeedback>

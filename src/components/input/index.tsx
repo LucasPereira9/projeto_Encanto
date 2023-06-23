@@ -3,6 +3,7 @@ import {View, TextInput} from 'react-native';
 import {styles} from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {IInput} from './input.Structure';
+import theme from '../../global/theme';
 
 export default function Input({
   icon,
@@ -22,7 +23,7 @@ export default function Input({
           value={value}
           onChangeText={text => setValue(text)}
           placeholder={placeholder}
-          placeholderTextColor={'#D8D6D6'}
+          placeholderTextColor={theme.colors.easyWhite}
           style={styles.inputContainer}
         />
       </View>
