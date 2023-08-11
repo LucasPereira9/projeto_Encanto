@@ -8,7 +8,6 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   StatusBar,
-  Alert,
 } from 'react-native';
 import {signIn} from '../../hooks/Auth';
 import {useNavigation} from '@react-navigation/native';
@@ -42,8 +41,7 @@ export default function Login() {
       email: data.email,
       password: data.password,
       NextStep: () => {
-        console.log(data);
-        Alert.alert('TA LIBERADA MADAME');
+        navigation.navigate('Home');
       },
     });
   };
@@ -147,7 +145,11 @@ export default function Login() {
 
           <View style={styles.content}>
             <Text style={styles.forgotPass}>Esqueceu sua senha?</Text>
-            <Button pressed={handleSubmit(onSubmit)} title="LOGAR" />
+            <Button
+              isDisabled={!isValid}
+              pressed={handleSubmit(onSubmit)}
+              title="LOGAR"
+            />
             <View>
               <TouchableOpacity
                 onPress={() => navigation.navigate('Register')}

@@ -3,7 +3,6 @@ import theme from '../../global/theme';
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,

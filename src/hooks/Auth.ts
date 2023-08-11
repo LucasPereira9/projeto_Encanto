@@ -1,15 +1,11 @@
 import auth from '@react-native-firebase/auth';
 import {ISignIn, ISignUp} from './Services.Structure';
 
-export async function signUp({email, password, name}: ISignUp) {
+export async function signUp({email, password, NextStep}: ISignUp) {
   try {
     await auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        auth().currentUser?.updateProfile({
-          displayName: name,
-        });
-      });
+      .then(() => NextStep());
   } catch (error) {
     console.log('error: ', error);
   }

@@ -1,7 +1,7 @@
 export interface ISignUp {
   email: string;
   password: string;
-  name: string;
+  NextStep: () => void;
 }
 export interface ISignIn {
   email: string;

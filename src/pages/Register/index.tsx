@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  Alert,
   Animated,
   Keyboard,
   Text,
@@ -7,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import {signUp} from '../../hooks/Auth';
 import LinearGradient from 'react-native-linear-gradient';
 import theme from '../../global/theme';
 import {defaultStyles} from '../../global/defaultStyles';
@@ -27,7 +29,16 @@ export default function Register() {
   const [ShowConfirmPassword, setShowConfirmPassword] = useState(true);
 
   const onSubmit: SubmitHandler<IRegisterData> = (data: IRegisterData) => {
-    console.log(data);
+    signUp({
+      email: data.email,
+      password: data.password,
+      NextStep: () => {
+        auth().currentUser?.updateProfile({
+          displayName: data.userName,
+        });
+        Alert.alert('conta criada');
+      },
+    });
   };
 
   useEffect(() => {
@@ -115,7 +126,11 @@ export default function Register() {
             </View>
           </View>
           <View style={styles.button}>
-            <Button title="CRIAR CONTA" pressed={handleSubmit(onSubmit)} />
+            <Button
+              isDisabled={!isValid}
+              title="CRIAR CONTA"
+              pressed={handleSubmit(onSubmit)}
+            />
           </View>
         </Animated.View>
 
