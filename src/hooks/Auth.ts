@@ -6,8 +6,17 @@ export async function signUp({email, password, NextStep}: ISignUp) {
     await auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => NextStep());
-  } catch (error) {
-    console.log('error: ', error);
+  } catch (error: any) {
+    console.log('error: ', error.code);
+    if (error.code === 'auth/invalid-email') {
+      return 'INVALID_EMAIL';
+    }
+    if (error.code === 'auth/email-already-in-use') {
+      return 'EMAIL_IN_USE';
+    }
+    if (error.code === 'auth/weak-password') {
+      return 'WEAK_PASSWORD';
+    }
   }
 }
 

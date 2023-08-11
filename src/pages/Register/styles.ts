@@ -8,15 +8,23 @@ export const styles = StyleSheet.create({
   },
   titleContainer: {
     alignItems: 'center',
-    top: '13%',
+    top: '14%',
   },
   title: {
     fontSize: 22,
     color: theme.colors.primary,
   },
+  inputsContainer: {
+    height: '56%',
+  },
   button: {
     alignContent: 'center',
     alignItems: 'center',
     bottom: '22%',
+  },
+
+  iconContent: {
+    position: 'absolute',
+    marginHorizontal: 15,
   },
 });
