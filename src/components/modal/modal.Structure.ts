@@ -1,0 +1,8 @@
+export interface IModal {
+  opened: boolean;
+  title: string;
+  subtitle: string;
+  buttonTitle: string;
+  buttonFunction: () => void;
+  secondButton?: boolean;
+}

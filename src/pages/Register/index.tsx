@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 import {
   Alert,
   Animated,
@@ -20,20 +20,23 @@ import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import {IRegisterData} from './registerData.structure';
 import Icon from 'react-native-vector-icons/Feather';
 import {useNavigation} from '@react-navigation/native';
+import {Modal} from '../../components/modal';
 
 export default function Register() {
   const navigation = useNavigation();
-  const Show = useRef(new Animated.Value(0)).current;
+  const Show = React.useRef(new Animated.Value(0)).current;
   const {
     control,
     handleSubmit,
     formState: {isValid},
   } = useForm({mode: 'onChange'});
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = React.useState(true as boolean);
+  const [modal, setModal] = React.useState(false as boolean);
 
   const onSubmit: SubmitHandler<IRegisterData> = async (
     data: IRegisterData,
   ) => {
+    setModal(false);
     const response = await signUp({
       email: data.email,
       password: data.password,
@@ -47,7 +50,7 @@ export default function Register() {
     });
     switch (response) {
       case 'INVALID_EMAIL':
-        console.log('inv email');
+        setModal(true);
         break;
       case 'EMAIL_IN_USE':
         console.log('use email');
@@ -58,7 +61,7 @@ export default function Register() {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     Animated.timing(Show, {
       duration: 2000,
       toValue: 1,
@@ -99,6 +102,7 @@ export default function Register() {
                 rules={{required: true}}
                 render={({field: {onChange, value}}) => (
                   <Input
+                    error={modal ? true : false}
                     keyboardType={'email-address'}
                     icon="envelope"
                     placeholder="insira o email"
@@ -143,6 +147,14 @@ export default function Register() {
           start={{x: 0, y: 0}}
           end={{x: 0, y: 1.8}}
           style={defaultStyles.gradient}
+        />
+
+        <Modal
+          title="Email inválido"
+          subtitle="Ajuste o email e tente novamente"
+          opened={modal}
+          buttonTitle="entendido"
+          buttonFunction={() => {}}
         />
       </View>
     </TouchableWithoutFeedback>
