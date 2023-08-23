@@ -31,7 +31,10 @@ export const Modal = (props: IModal) => {
         <View
           style={[
             styles.buttonContainer,
-            {flexDirection: props.secondButton ? 'row' : undefined},
+            {
+              flexDirection: props.secondButton ? 'row' : undefined,
+              justifyContent: 'space-around',
+            },
           ]}>
           <Button
             isDisabled={false}
@@ -46,6 +49,7 @@ export const Modal = (props: IModal) => {
               isDisabled={false}
               pressed={() => {
                 myRef.current?.close();
+                props.secondButtonFunction();
               }}
               title="Cancelar"
             />

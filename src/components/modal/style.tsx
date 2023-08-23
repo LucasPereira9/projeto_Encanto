@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     backgroundColor: theme.colors.white,
   },
   Content: {
-    marginVertical: 20,
+    marginTop: 16,
     alignItems: 'center',
     justifyContent: 'space-around',
     height: 100,
@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
   },
   buttonContainer: {
     alignItems: 'center',
-    top: 30,
+    top: 12,
     height: 118,
   },
 });

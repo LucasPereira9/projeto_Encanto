@@ -31,12 +31,27 @@ export default function Register() {
     formState: {isValid},
   } = useForm({mode: 'onChange'});
   const [showPassword, setShowPassword] = React.useState(true as boolean);
-  const [modal, setModal] = React.useState(false as boolean);
+  const [invalidEmailModal, setInvalidEmailModal] = React.useState(
+    false as boolean,
+  );
+  const [emailInUseModal, setEmailInUseModal] = React.useState(
+    false as boolean,
+  );
+  const [weakPasswordModal, setWeakPasswordModal] = React.useState(
+    false as boolean,
+  );
+  const [emailError, setEmailError] = React.useState(false as boolean);
+  const [passwordError, setPasswordError] = React.useState(false as boolean);
+
+  function TurnOffErrors() {
+    setEmailError(false);
+    setPasswordError(false);
+  }
 
   const onSubmit: SubmitHandler<IRegisterData> = async (
     data: IRegisterData,
   ) => {
-    setModal(false);
+    TurnOffErrors();
     const response = await signUp({
       email: data.email,
       password: data.password,
@@ -50,13 +65,16 @@ export default function Register() {
     });
     switch (response) {
       case 'INVALID_EMAIL':
-        setModal(true);
+        setInvalidEmailModal(true);
+        setEmailError(true);
         break;
       case 'EMAIL_IN_USE':
-        console.log('use email');
+        setEmailInUseModal(true);
+        setEmailError(true);
         break;
       case 'WEAK_PASSWORD':
-        console.log('weak pass');
+        setWeakPasswordModal(true);
+        setPasswordError(true);
         break;
     }
   };
@@ -69,6 +87,7 @@ export default function Register() {
       useNativeDriver: false,
     }).start();
   }, [Show]);
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={defaultStyles.Container}>
@@ -102,7 +121,7 @@ export default function Register() {
                 rules={{required: true}}
                 render={({field: {onChange, value}}) => (
                   <Input
-                    error={modal ? true : false}
+                    error={emailError}
                     keyboardType={'email-address'}
                     icon="envelope"
                     placeholder="insira o email"
@@ -118,6 +137,7 @@ export default function Register() {
                 rules={{required: true}}
                 render={({field: {onChange, value}}) => (
                   <Input
+                    error={passwordError}
                     keyboardType={'numeric'}
                     icon="lock"
                     placeholder="insira a senha"
@@ -141,20 +161,41 @@ export default function Register() {
             />
           </View>
         </Animated.View>
-
         <LinearGradient
           colors={['transparent', theme.colors.primary]}
           start={{x: 0, y: 0}}
           end={{x: 0, y: 1.8}}
           style={defaultStyles.gradient}
         />
-
         <Modal
           title="Email inválido"
           subtitle="Ajuste o email e tente novamente"
-          opened={modal}
+          opened={invalidEmailModal}
           buttonTitle="entendido"
-          buttonFunction={() => {}}
+          buttonFunction={() => {
+            setInvalidEmailModal(false);
+          }}
+        />
+        <Modal
+          title="Email em uso"
+          subtitle="Ajuste o email ou faça o login"
+          opened={emailInUseModal}
+          buttonTitle="Fazer login"
+          secondButton={true}
+          secondButtonFunction={() => setEmailInUseModal(false)}
+          buttonFunction={() => {
+            setEmailInUseModal(false);
+            navigation.goBack();
+          }}
+        />
+        <Modal
+          title="senha fraca"
+          subtitle="A senha deve conter no minimo 6 digitos"
+          opened={weakPasswordModal}
+          buttonTitle="entendido"
+          buttonFunction={() => {
+            setWeakPasswordModal(false);
+          }}
         />
       </View>
     </TouchableWithoutFeedback>

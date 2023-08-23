@@ -5,4 +5,5 @@ export interface IModal {
   buttonTitle: string;
   buttonFunction: () => void;
   secondButton?: boolean;
+  secondButtonFunction?: () => void;
 }
