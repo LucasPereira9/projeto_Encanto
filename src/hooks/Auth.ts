@@ -1,11 +1,11 @@
 import auth from '@react-native-firebase/auth';
 import {ISignIn, ISignUp} from './Services.Structure';
 
-export async function signUp({email, password, NextStep}: ISignUp) {
+export async function signUp(props: ISignUp) {
   try {
     await auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => NextStep());
+      .createUserWithEmailAndPassword(props.email, props.password)
+      .then(() => props.NextStep());
   } catch (error: any) {
     console.log('error: ', error.code);
     if (error.code === 'auth/invalid-email') {
@@ -20,11 +20,11 @@ export async function signUp({email, password, NextStep}: ISignUp) {
   }
 }
 
-export async function signIn({email, password, NextStep}: ISignIn) {
+export async function signIn(props: ISignIn) {
   try {
     await auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => NextStep());
+      .signInWithEmailAndPassword(props.email, props.password)
+      .then(() => props.NextStep());
   } catch (error: any) {
     console.log('error: ', error.code);
     if (error.code === 'auth/invalid-email') {

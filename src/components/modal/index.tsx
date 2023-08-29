@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 import {Modalize} from 'react-native-modalize';
 import Button from '../button';
 import {IModal} from './modal.Structure';
@@ -7,9 +7,9 @@ import {Text, View} from 'react-native';
 import theme from '../../global/theme';
 
 export const Modal = (props: IModal) => {
-  const myRef = useRef<Modalize>();
+  const myRef = React.useRef<Modalize>();
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (props.opened) {
       myRef.current?.open();
     } else {
