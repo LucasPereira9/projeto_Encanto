@@ -8,7 +8,6 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   StatusBar,
-  Alert,
 } from 'react-native';
 import {signIn} from '../../hooks/Auth';
 import {useNavigation} from '@react-navigation/native';
@@ -21,6 +20,8 @@ import Button from '../../components/button';
 import {defaultStyles} from '../../global/defaultStyles';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import {ILoginData} from './loginData.structure';
+import {Modal} from '../../components/modal';
+import ForgotPassword from './forgotPassword';
 
 export default function Login() {
   const navigation = useNavigation();
@@ -31,21 +32,57 @@ export default function Login() {
   } = useForm({mode: 'onChange'});
 
   const [showPassword, setShowPassword] = useState(true);
+  const [loading, setLoading] = React.useState(false as boolean);
+  const [invalidEmailModal, setInvalidEmailModal] = React.useState(
+    false as boolean,
+  );
+  const [forgotPasswordModal, setForgotPasswordModal] = React.useState(
+    false as boolean,
+  );
+  const [userNotFoundmodal, setUserNotFoundModal] = React.useState(
+    false as boolean,
+  );
+  const [wrongPasswordModal, setWrongPasswordModal] = React.useState(
+    false as boolean,
+  );
+  const [emailError, setEmailError] = React.useState(false as boolean);
+  const [passwordError, setPasswordError] = React.useState(false as boolean);
 
   const moveAnim = useRef(new Animated.Value(0)).current;
   const topAnim = useRef(new Animated.Value(0)).current;
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const Show = useRef(new Animated.Value(0)).current;
 
-  const onSubmit: SubmitHandler<ILoginData> = (data: ILoginData) => {
-    signIn({
+  function TurnOffErrors() {
+    setEmailError(false);
+    setPasswordError(false);
+  }
+
+  const onSubmit: SubmitHandler<ILoginData> = async (data: ILoginData) => {
+    TurnOffErrors();
+    setLoading(true);
+    const response = await signIn({
       email: data.email,
       password: data.password,
       NextStep: () => {
-        console.log(data);
-        Alert.alert('TA LIBERADA MADAME');
+        navigation.navigate('Home');
       },
     });
+    switch (response) {
+      case 'INVALID_EMAIL':
+        setInvalidEmailModal(true);
+        setEmailError(true);
+        break;
+      case 'USER_NOT_FOUND':
+        setUserNotFoundModal(true);
+        setEmailError(true);
+        break;
+      case 'WRONG_PASSWORD':
+        setWrongPasswordModal(true);
+        setPasswordError(true);
+        break;
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -65,8 +102,6 @@ export default function Login() {
         useNativeDriver: false,
       }),
     ]).start();
-  }, [moveAnim, topAnim]);
-  useEffect(() => {
     Animated.timing(fadeAnim, {
       duration: 3000,
       toValue: 0,
@@ -79,11 +114,15 @@ export default function Login() {
       delay: 1500,
       useNativeDriver: false,
     }).start();
-  }, [moveAnim, fadeAnim, Show]);
+  }, [Show, fadeAnim, moveAnim, topAnim]);
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={defaultStyles.Container}>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        setForgotPasswordModal(false);
+        Keyboard.dismiss();
+      }}>
+      <View style={[defaultStyles.Container, {paddingBottom: 140}]}>
         <StatusBar
           backgroundColor="transparent"
           barStyle="light-content"
@@ -111,43 +150,58 @@ export default function Login() {
         </View>
 
         <Animated.View style={{opacity: Show}}>
-          <Controller
-            control={control}
-            rules={{required: true}}
-            render={({field: {onChange, value}}) => (
-              <Input
-                keyboardType={'email-address'}
-                icon="envelope"
-                placeholder="Digite seu email"
-                value={value}
-                setValue={onChange}
-              />
-            )}
-            name="email"
-            defaultValue=""
-          />
-          <Controller
-            control={control}
-            rules={{required: true}}
-            render={({field: {onChange, value}}) => (
-              <Input
-                keyboardType={'numeric'}
-                icon="lock"
-                placeholder="Digite sua senha"
-                value={value}
-                setValue={onChange}
-                secureText={showPassword}
-                secondIcon={showPassword ? 'eye-slash' : 'eye'}
-                pressed={() => setShowPassword(!showPassword)}
-              />
-            )}
-            name="password"
-            defaultValue=""
-          />
+          <View>
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  error={emailError}
+                  keyboardType={'email-address'}
+                  icon="envelope"
+                  placeholder="Digite seu email"
+                  value={value}
+                  setValue={onChange}
+                />
+              )}
+              name="email"
+              defaultValue=""
+            />
+            <Controller
+              control={control}
+              rules={{required: true}}
+              render={({field: {onChange, value}}) => (
+                <Input
+                  error={passwordError}
+                  keyboardType={'numeric'}
+                  icon="lock"
+                  placeholder="Digite sua senha"
+                  value={value}
+                  setValue={onChange}
+                  secureText={showPassword}
+                  secondIcon={showPassword ? 'eye-slash' : 'eye'}
+                  pressed={() => setShowPassword(!showPassword)}
+                />
+              )}
+              name="password"
+              defaultValue=""
+            />
+          </View>
 
           <View style={styles.content}>
-            <Text style={styles.forgotPass}>Esqueceu sua senha?</Text>
-            <Button pressed={handleSubmit(onSubmit)} title="LOGAR" />
+            <TouchableOpacity
+              onPress={() => setForgotPasswordModal(true)}
+              activeOpacity={0.6}>
+              <Text style={styles.forgotPass}>Esqueceu sua senha?</Text>
+            </TouchableOpacity>
+            <View style={{margin: 16}}>
+              <Button
+                loading={loading}
+                isDisabled={!isValid}
+                pressed={handleSubmit(onSubmit)}
+                title="LOGAR"
+              />
+            </View>
             <View>
               <TouchableOpacity
                 onPress={() => navigation.navigate('Register')}
@@ -165,6 +219,42 @@ export default function Login() {
           start={{x: 0, y: 0}}
           end={{x: 0, y: 1.8}}
           style={defaultStyles.gradient}
+        />
+        <Modal
+          title="Email inválido"
+          subtitle="Ajuste o email e tente novamente"
+          opened={invalidEmailModal}
+          buttonTitle="entendido"
+          buttonFunction={() => {
+            setInvalidEmailModal(false);
+          }}
+        />
+        <Modal
+          title="Usuário não encontrado"
+          subtitle="tente novamente ou crie uma conta"
+          opened={userNotFoundmodal}
+          secondButton={true}
+          secondButtonFunction={() => setUserNotFoundModal(false)}
+          buttonTitle="Criar uma conta"
+          buttonFunction={() => {
+            setUserNotFoundModal(false);
+            navigation.navigate('Register');
+          }}
+        />
+        <Modal
+          title="Senha incorreta"
+          subtitle="Verifique a senha e tente novamente"
+          opened={wrongPasswordModal}
+          buttonTitle="entendido"
+          buttonFunction={() => {
+            setWrongPasswordModal(false);
+          }}
+        />
+        <Modal
+          opened={forgotPasswordModal}
+          content={
+            <ForgotPassword onPress={() => setForgotPasswordModal(false)} />
+          }
         />
       </View>
     </TouchableWithoutFeedback>

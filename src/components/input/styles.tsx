@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     flexDirection: 'row',
     marginVertical: 12,
-    height: '10%',
+    height: 40,
     width: '80%',
   },
   iconContainer: {
