@@ -1,2 +1,2 @@
 # projeto_Encanto
-uma loja virtual voltada para o publico feminino com diversidade de produtos.
+a virtual store aimed at the female public with a diversity of products.
