@@ -25,7 +25,16 @@ export async function signIn({email, password, NextStep}: ISignIn) {
     await auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => NextStep());
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    console.log('error: ', error.code);
+    if (error.code === 'auth/invalid-email') {
+      return 'INVALID_EMAIL';
+    }
+    if (error.code === 'auth/user-not-found') {
+      return 'USER_NOT_FOUND';
+    }
+    if (error.code === 'auth/wrong-password') {
+      return 'WRONG_PASSWORD';
+    }
   }
 }

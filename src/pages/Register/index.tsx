@@ -30,6 +30,7 @@ export default function Register() {
     handleSubmit,
     formState: {isValid},
   } = useForm({mode: 'onChange'});
+  const [loading, setLoading] = React.useState(false as boolean);
   const [showPassword, setShowPassword] = React.useState(true as boolean);
   const [invalidEmailModal, setInvalidEmailModal] = React.useState(
     false as boolean,
@@ -51,6 +52,7 @@ export default function Register() {
   const onSubmit: SubmitHandler<IRegisterData> = async (
     data: IRegisterData,
   ) => {
+    setLoading(true);
     TurnOffErrors();
     const response = await signUp({
       email: data.email,
@@ -77,6 +79,7 @@ export default function Register() {
         setPasswordError(true);
         break;
     }
+    setLoading(false);
   };
 
   React.useEffect(() => {
@@ -155,6 +158,7 @@ export default function Register() {
           </View>
           <View style={styles.button}>
             <Button
+              loading={loading}
               isDisabled={!isValid}
               title="CRIAR CONTA"
               pressed={handleSubmit(onSubmit)}

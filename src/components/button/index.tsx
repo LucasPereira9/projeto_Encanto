@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, TouchableOpacity} from 'react-native';
+import {ActivityIndicator, Text, TouchableOpacity} from 'react-native';
 import {styles} from './styles';
 import {IButton} from './button.Structure';
 import theme from '../../global/theme';
@@ -17,7 +17,11 @@ export default function Button(props: IButton) {
             : theme.colors.primary,
         },
       ]}>
-      <Text style={styles.text}>{props.title}</Text>
+      {props.loading ? (
+        <ActivityIndicator />
+      ) : (
+        <Text style={styles.text}>{props.title}</Text>
+      )}
     </TouchableOpacity>
   );
 }

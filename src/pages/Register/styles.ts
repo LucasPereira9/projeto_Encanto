@@ -3,19 +3,19 @@ import theme from '../../global/theme';
 
 export const styles = StyleSheet.create({
   content: {
-    height: '90%',
+    height: '100%',
     justifyContent: 'space-around',
   },
   titleContainer: {
     alignItems: 'center',
-    top: '14%',
+    top: '18%',
   },
   title: {
     fontSize: 22,
     color: theme.colors.primary,
   },
   inputsContainer: {
-    height: '56%',
+    height: '46%',
   },
   button: {
     alignContent: 'center',

@@ -24,37 +24,43 @@ export const Modal = (props: IModal) => {
       adjustToContentHeight
       ref={myRef}>
       <View style={styles.Container}>
-        <View style={styles.Content}>
-          <Text style={styles.title}>{props.title}</Text>
-          <Text style={styles.subtitle}>{props.subtitle}</Text>
-        </View>
-        <View
-          style={[
-            styles.buttonContainer,
-            {
-              flexDirection: props.secondButton ? 'row' : undefined,
-              justifyContent: 'space-around',
-            },
-          ]}>
-          <Button
-            isDisabled={false}
-            pressed={() => {
-              myRef.current?.close();
-              props.buttonFunction();
-            }}
-            title={props.buttonTitle}
-          />
-          {props.secondButton && (
-            <Button
-              isDisabled={false}
-              pressed={() => {
-                myRef.current?.close();
-                props.secondButtonFunction();
-              }}
-              title="Cancelar"
-            />
-          )}
-        </View>
+        {props.content ? (
+          props.content
+        ) : (
+          <>
+            <View style={styles.Content}>
+              <Text style={styles.title}>{props.title}</Text>
+              <Text style={styles.subtitle}>{props.subtitle}</Text>
+            </View>
+            <View
+              style={[
+                styles.buttonContainer,
+                {
+                  flexDirection: props.secondButton ? 'row' : undefined,
+                  justifyContent: 'space-around',
+                },
+              ]}>
+              <Button
+                isDisabled={false}
+                pressed={() => {
+                  myRef.current?.close();
+                  props.buttonFunction();
+                }}
+                title={props.buttonTitle}
+              />
+              {props.secondButton && (
+                <Button
+                  isDisabled={false}
+                  pressed={() => {
+                    myRef.current?.close();
+                    props.secondButtonFunction();
+                  }}
+                  title="Cancelar"
+                />
+              )}
+            </View>
+          </>
+        )}
       </View>
     </Modalize>
   );

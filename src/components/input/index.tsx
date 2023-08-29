@@ -13,11 +13,11 @@ export default function Input(props: IInput) {
         styles.Container,
         {
           borderWidth: props.error ? 2 : 0,
-          borderColor: props.error ? 'red' : undefined,
+          borderColor: props.error ? theme.colors.error : undefined,
         },
       ]}>
       <View style={styles.iconContainer}>
-        <Icon name={props.icon} size={22} color="#F99779" />
+        <Icon name={props.icon} size={22} color={theme.colors.primary} />
       </View>
       <View style={styles.inputContainer}>
         <TextInput
@@ -32,7 +32,11 @@ export default function Input(props: IInput) {
       </View>
       {props.secondIcon && (
         <TouchableOpacity onPress={props.pressed} style={styles.eyeContent}>
-          <Icon name={props.secondIcon} size={25} color="#F99779" />
+          <Icon
+            name={props.secondIcon}
+            size={25}
+            color={theme.colors.primary}
+          />
         </TouchableOpacity>
       )}
     </View>

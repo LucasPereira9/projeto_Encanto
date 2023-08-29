@@ -8,8 +8,8 @@ export const styles = StyleSheet.create({
     backgroundColor: theme.colors.gray,
     borderRadius: 10,
     flexDirection: 'row',
-    marginVertical: 17,
-    height: '11%',
+    marginVertical: 12,
+    height: 40,
     width: '80%',
   },
   iconContainer: {

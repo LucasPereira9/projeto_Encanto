@@ -1,4 +1,5 @@
 export interface IModal {
+  content?: React.ReactNode;
   opened: boolean;
   title: string;
   subtitle: string;
