@@ -12,12 +12,14 @@ import {ThemeProvider} from 'styled-components';
 
 import Register from './src/pages/Register';
 import theme from './src/global/theme';
+import {StatusBar} from 'react-native';
 
 const Stack = createStackNavigator();
 
 export default function Routes() {
   return (
     <ThemeProvider theme={theme}>
+      <StatusBar backgroundColor={theme.colors.black} />
       <NavigationContainer>
         <CheckpointProvider>
           <Stack.Navigator
@@ -27,7 +29,7 @@ export default function Routes() {
               gestureDirection: 'horizontal',
               cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             }}
-            initialRouteName={'Login'}>
+            initialRouteName={'Home'}>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Home" component={Home} />
