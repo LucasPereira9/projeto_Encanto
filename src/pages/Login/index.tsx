@@ -65,7 +65,7 @@ export default function Login() {
       email: data.email,
       password: data.password,
       NextStep: () => {
-        navigation.navigate('Home');
+        navigation.navigate('AuthPages');
       },
     });
     switch (response) {

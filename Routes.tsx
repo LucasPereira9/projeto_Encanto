@@ -6,7 +6,7 @@ import {
   createStackNavigator,
 } from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import Home from './src/pages/Home';
+import AuthPages from './src/pages/AuthPages';
 import Login from './src/pages/Login';
 import {ThemeProvider} from 'styled-components';
 
@@ -29,10 +29,10 @@ export default function Routes() {
               gestureDirection: 'horizontal',
               cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             }}
-            initialRouteName={'Home'}>
+            initialRouteName={'AuthPages'}>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
-            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="AuthPages" component={AuthPages} />
           </Stack.Navigator>
         </CheckpointProvider>
       </NavigationContainer>
