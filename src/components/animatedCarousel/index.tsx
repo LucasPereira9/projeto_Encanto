@@ -4,7 +4,9 @@ import Swiper from 'react-native-swiper';
 import theme from '../../global/theme';
 
 export default function AnimatedCarousel() {
-  const teste = [
+  const windowHeight = useWindowDimensions().height / 4.4;
+
+  const mockedImages = [
     {
       image:
         'https://media.cnn.com/api/v1/images/stellar/prod/230905085829-lionel-messi-0903.jpg?c=16x9&q=h_720,w_1280,c_fill/f_webp',
@@ -21,13 +23,13 @@ export default function AnimatedCarousel() {
       age: 22,
     },
   ];
-  const windowHeight = useWindowDimensions().height / 2.5;
 
   const renderImages = React.useMemo(() => {
-    return teste.map((item: any, index: number) => {
+    return mockedImages.map((item: any, index: number) => {
       return (
         <View key={index}>
           <Image
+            resizeMode="stretch"
             style={{width: '100%', height: windowHeight}}
             source={{
               uri: `${item.image}`,
@@ -42,7 +44,7 @@ export default function AnimatedCarousel() {
     <View style={{width: '100%', height: windowHeight}}>
       <Swiper
         bounces={true}
-        dotColor={theme.colors.gray} // Defina a cor dos pontos inativos
+        dotColor={theme.colors.gray}
         activeDotColor={theme.colors.primary}
         autoplay={true}
         autoplayTimeout={3}>
