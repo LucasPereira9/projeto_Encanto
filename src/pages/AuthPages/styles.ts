@@ -14,6 +14,10 @@ export const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   cartContainer: {
-    marginHorizontal: 18,
+    marginHorizontal: 25,
+  },
+  logo: {
+    width: '100%',
+    height: '100%',
   },
 });

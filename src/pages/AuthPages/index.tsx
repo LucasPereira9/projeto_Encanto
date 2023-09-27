@@ -6,44 +6,39 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import theme from '../../global/theme';
 import {View, Image} from 'react-native';
 import {styles} from './styles';
-import LinearGradient from 'react-native-linear-gradient';
 import {defaultStyles} from '../../global/defaultStyles';
 
 const Tab = createBottomTabNavigator();
 
 export default function AuthPages() {
   return (
-    <>
+    <View style={defaultStyles.Container}>
       <View style={styles.topBar}>
         <View style={styles.logoContainer}>
           <Image
             resizeMode="contain"
-            style={{width: '100%', height: '100%'}}
+            style={styles.logo}
             source={require('../../assets/encantoLogo.jpg')}
           />
         </View>
         <View style={styles.cartContainer}>
           <Icon name={'shopping-cart'} size={24} color={theme.colors.primary} />
         </View>
-        <LinearGradient
-          colors={['transparent', theme.colors.primary]}
-          start={{x: 0, y: 0}}
-          end={{x: 0, y: 1.8}}
-          style={defaultStyles.gradient}
-        />
       </View>
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
           tabBarActiveTintColor: theme.colors.primary,
-          tabBarInactiveTintColor: theme.colors.black,
+          tabBarInactiveTintColor: theme.colors.white,
           tabBarStyle: {
             height: 60,
-            backgroundColor: theme.colors.white,
+            backgroundColor: theme.colors.black,
+            borderTopColor: 'transparent',
           },
 
           tabBarLabelStyle: {
-            fontSize: 14,
+            fontSize: 11,
+            marginBottom: 6,
             fontFamily: 'Roboto-Bold',
           },
         }}
@@ -63,10 +58,19 @@ export default function AuthPages() {
               <Icon name="gear" size={30} color={color} />
             ),
           }}
+          name="well"
+          component={Settings}
+        />
+        <Tab.Screen
+          options={{
+            tabBarIcon: ({color}) => (
+              <Icon name="gear" size={30} color={color} />
+            ),
+          }}
           name="Settings"
           component={Settings}
         />
       </Tab.Navigator>
-    </>
+    </View>
   );
 }
